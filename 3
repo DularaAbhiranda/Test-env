@@ -1,0 +1,41 @@
+network_config: 
+enabled: true
+ 
+ 
+Service_monitoring_config: 
+enabled: true
+ 
+for above 2 : /etc/datadog-agent/system-probe.yaml.example
+ 
+Make sure to first copy the example files, and then rename them to probe.yaml
+ 
+cp /etc/datadog-agent/system-probe.yaml.example /etc/datadog-agent/system-probe.yaml
+vim /etc/datadog-agent/system-probe.yaml
+ 
+These steps are mandatory: do not rename or edit the example file directly.
+Instead, make a copy of the example file, rename it to probe.yaml, and apply your configurations there.
+Always keep the original example file unchanged as a best practice.
+ 
+To enable the Lines in VIM
+:set line
+ 
+ 
+For below lines
+ 
+The line numbers do not match the ones shown on GitHub. On GitHub, all configuration files are combined into a single example file.
+Please make sure to double-check and verify the line numbers against Thilara's documentation, the GitHub file, and the lines provided below.
+The lines below have been corrected to match the original datadog.yaml file.
+ 
+vim /etc/datadog-agent/datadog.yaml
+ 
+Uncomment lines 1606,1617,1620  1624,1627
+
+process config: 
+process_collection: 
+enabled:true  
+
+enabled: true 
+
+container_collection: 
+enabled: true
+ 
