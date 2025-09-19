@@ -1,0 +1,90 @@
+- ip_address: '10.67.1.11'        # Forty Firewall
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'MD5'
+    authKey: 'Datadog@345#'
+    privProtocol: 'AES'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:firewall'
+      - 'location:datacenter1'
+
+  - ip_address: '10.67.1.1'         # Perimeter Firewall
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'SHA256'
+    authKey: 'Datadog@345#'
+    privProtocol: 'DES'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:firewall'
+      - 'location:perimeter'
+
+  - ip_address: '10.67.1.2'         # Perimeter Firewall
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'SHA256'
+    authKey: 'Datadog@345#'
+    privProtocol: 'DES'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:firewall'
+      - 'location:perimeter'
+
+  - ip_address: '10.67.1.3'         # Perimeter Firewall
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'SHA256'
+    authKey: 'Datadog@345#'
+    privProtocol: 'DES'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:firewall'
+      - 'location:perimeter'
+
+  - ip_address: '10.67.2.3'         # Cisco Switch
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'MD5'
+    authKey: 'Datadog@345#'
+    privProtocol: 'AES-128'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:switch'
+      - 'location:datacenter1'
+
+  - ip_address: '10.67.2.100'       # Cisco Switch
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'MD5'
+    authKey: 'Datadog@345#'
+    privProtocol: 'AES-128'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:switch'
+      - 'location:datacenter1'
+
+  - ip_address: '10.67.2.101'       # Cisco Switch
+    snmp_version: 3
+    user: 'DataDog'
+    authProtocol: 'MD5'
+    authKey: 'Datadog@345#'
+    privProtocol: 'AES-128'
+    privKey: 'Datadog@345#'
+    loader: core
+    use_device_id_as_hostname: true
+    tags:
+      - 'device_type:switch'
+      - 'location:datacenter1'
