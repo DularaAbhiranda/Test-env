@@ -1,0 +1,28 @@
+# Firewalls subnet
+      - network_address: 10.67.1.0/24
+        snmp_version: 3
+        user: 'DataDog'
+        authProtocol: 'SHA256'
+        authKey: 'Datadog@345#'
+        privProtocol: 'DES'
+        privKey: 'Datadog@345#'
+        tags:
+          - 'device_type:firewall'
+          - 'location:perimeter'
+        # Separate devices using MD5 (like 10.67.1.11)
+        extra_instances:
+          - ip_address: 10.67.1.11
+            authProtocol: 'MD5'
+            privProtocol: 'AES'
+
+      # Switches subnet
+      - network_address: 10.67.2.0/24
+        snmp_version: 3
+        user: 'DataDog'
+        authProtocol: 'MD5'
+        authKey: 'Datadog@345#'
+        privProtocol: 'AES-128'
+        privKey: 'Datadog@345#'
+        tags:
+          - 'device_type:switch'
+          - 'location:datacenter1'
