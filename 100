@@ -1,0 +1,55 @@
+# =========================
+# Squid 6.12 Configuration
+# Temporary Full Internet Access
+# =========================
+
+# Ports
+http_port 3128
+
+# Logging
+cache_log /var/log/squid/cache.log
+access_log /var/log/squid/access.log
+cache_store_log /var/log/squid/store.log
+
+# PID file
+pid_filename /var/run/squid/squid.pid
+
+# ================= Cache Settings =================
+# Disable all caching (Datadog only proxy)
+cache deny all
+cache_mem 0 MB
+maximum_object_size 0 KB
+# No cache_dir at all (disable swap logs)
+
+# ================= ACLs - local networks =================
+acl localnet src 192.168.84.0/24
+acl localnet src 127.0.0.1/32       # localhost
+
+# ================= Allowed ports =================
+acl SSL_ports port 443
+acl Safe_ports port 80              # http
+acl Safe_ports port 21              # ftp
+acl Safe_ports port 443             # https
+acl Safe_ports port 1025-65535      # unregistered ports
+
+# ================= Datadog domains =================
+acl datadog_domains dstdomain .datadoghq.com
+acl datadog_domains dstdomain .datadoghq.eu
+acl datadog_domains dstdomain .datadoghq.ca
+acl datadog_domains dstdomain *.browser-intake-datadoghq.com
+
+# ================= Access rules =================
+# Allow localhost for admin/proxy access
+http_access allow localhost
+
+# Temporarily allow all traffic from local network
+http_access allow localnet
+
+# Commented out to allow full access
+# http_access allow localnet datadog_domains
+# http_access deny all
+
+# ================= Refresh patterns =================
+refresh_pattern ^ftp:           1440    20%     10080
+refresh_pattern -i (/cgi-bin/|\?) 0     0%      0
+refresh_pattern .               0       20%     4320
