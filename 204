@@ -1,0 +1,6 @@
+./configure \
+  --prefix=/usr \
+  --sysconfdir=/etc/squid \
+  --with-openssl \
+  --enable-ssl \
+  --enable-ssl-crtd
