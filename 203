@@ -1,0 +1,109 @@
+Step 1: Install Required Dependencies
+
+sudo dnf groupinstall "Development Tools" -y
+
+sudo dnf install gcc gcc-c++ make openssl-devel pam-devel libcap-devel libuuid-devel libdb-devel wget tar -y
+ 
+Step 2: Download and Extract Squid Source
+
+wget [http://www.squid-cache.org/Versions/v6/squid-6.12.tar.gz](http://www.squid-cache.org/Versions/v6/sq…
+
+tar -xvzf squid-6.12.tar.gz
+
+cd squid-6.12
+ 
+Step 3: Configure and Build Squid
+
+./configure --prefix=/usr --sysconfdir=/etc/squid --with-openssl --enable-ssl --enable-ssl-crtd
+
+make -j\$(nproc)
+
+sudo make install
+ 
+\--prefix=/usr → Install binaries in /usr/bin and /usr/sbin.
+
+\--sysconfdir=/etc/squid → Configuration files in /etc/squid.
+
+\--with-openssl --enable-ssl → Enable HTTPS support.
+
+\--enable-ssl-crtd → Required for SSL certificate generation.
+ 
+Step 4: Configure Cache Directories
+
+sudo mkdir -p /var/cache/squid
+
+sudo chown -R squid\:squid /var/cache/squid
+
+sudo chmod -R 755 /var/cache/squid
+ 
+# Initialize swap directories
+ 
+sudo -u squid squid -z
+ 
+Step 5: Configure Logs
+
+sudo mkdir -p /var/log/squid
+
+sudo chown -R squid\:squid /var/log/squid
+
+sudo chmod -R 755 /var/log/squid
+ 
+Step 6: Configure SELinux (if enabled)
+
+sestatus
+
+sudo setsebool -P squid\_connect\_any 1
+
+sudo chcon -R -t squid\_var\_run\_t /var/run/squid
+
+sudo chcon -R -t squid\_cache\_t /var/cache/squid
+
+sudo chcon -R -t squid\_log\_t /var/log/squid
+ 
+Step 7: Create Systemd Service File
+
+sudo nano /etc/systemd/system/squid.service
+ 
+\[Unit]
+
+Description=Squid Web Proxy
+
+After=network.target
+ 
+\[Service]
+
+Type=forking
+
+User=squid
+
+Group=squid
+
+ExecStartPre=/usr/sbin/squid -z
+
+ExecStart=/usr/sbin/squid -sYC
+
+ExecReload=/bin/kill -HUP \$MAINPID
+
+PIDFile=/var/run/squid/squid.pid
+
+Restart=on-failure
+ 
+\[Install]
+
+WantedBy=multi-user.target
+ 
+Step 8: Enable and Start Squid
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable --now squid
+
+sudo systemctl status squid
+ 
+Step 9: Test Squid Proxy
+
+curl -x [http://127.0.0.1:3128](http://127.0.0.1:3128) [http://example.com](http://example.com) -v
+
+sudo tail -f /var/log/squid/access.log /var/log/squid/cache.log
+squid : Optimising Web Delivery
+ 
