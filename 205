@@ -1,0 +1,45 @@
+#
+# Minimal Squid Proxy Configuration
+#
+ 
+# Define allowed client IPs
+acl allowed_clients src 10.64.203.12
+acl allowed_clients src 10.66.200.125
+acl allowed_clients src 10.66.203.27
+ 
+# Define ports
+acl SSL_ports port 443
+acl Safe_ports port 80          # http
+acl Safe_ports port 21          # ftp
+acl Safe_ports port 443         # https
+acl Safe_ports port 1025-65535  # unregistered ports
+acl CONNECT method CONNECT
+ 
+# Deny unsafe ports
+http_access deny !Safe_ports
+ 
+# Deny CONNECT to non-SSL ports
+http_access deny CONNECT !SSL_ports
+ 
+# Allow only defined client IPs
+http_access allow allowed_clients
+ 
+# Deny all other access
+http_access deny all
+ 
+# Squid proxy port
+http_port 3128
+ 
+# Cache settings
+coredump_dir /var/cache/squid
+ 
+# Refresh patterns
+refresh_pattern ^ftp:      1440    20%     10080
+refresh_pattern -i (/cgi-bin/|\?) 0 0%     0
+refresh_pattern .          0       20%     4320
+ 
+# DNS servers
+dns_nameservers 8.8.8.8 208.67.222.222
+ 
+# Max file descriptors
+max_filedescriptors 3200
