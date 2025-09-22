@@ -1,0 +1,70 @@
+init_config:
+  loader: core  # use core check implementation of SNMP integration. recommended
+  use_device_id_as_hostname: true  # recommended
+
+instances:
+  - ip_address: '1.2.3.4'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:router1'
+      - 'location:datacenter1'
+
+  - ip_address: '1.2.3.5'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:router2'
+      - 'location:datacenter1'
+
+  - ip_address: '1.2.3.6'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:switch1'
+      - 'location:datacenter2'
+
+  - ip_address: '1.2.3.7'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:switch2'
+      - 'location:datacenter2'
+
+  - ip_address: '1.2.3.8'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:firewall1'
+      - 'location:branch1'
+
+  - ip_address: '1.2.3.9'
+    snmp_version: 3
+    user: 'user'
+    authProtocol: 'SHA256'
+    authKey: 'fakeKey'
+    privProtocol: 'AES256'
+    privKey: 'fakePrivKey'
+    tags:
+      - 'device:firewall2'
+      - 'location:branch2'
