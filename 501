@@ -1,0 +1,58 @@
+############################################################
+# Squid configuration for Datadog traffic
+############################################################
+ 
+# Listen only on the proxy IP
+http_port 192.168.48.131:3128
+ 
+# -----------------------------
+# ACLs
+# -----------------------------
+ 
+# Allowed client IP(s)
+acl allowed_clients src 10.64.203.12/24   # replace with your client IP
+acl allowed_clients src 10.66.200.125/24
+acl allowed_clients src 10.66.203.27/24
+ 
+# Allowed Datadog and related domains
+acl allowed_domains dstdomain .datadoghq.com \
+    .datadog.pool.ntp.org \
+    .s3.amazonaws.com \
+    .raw.githubusercontent.com \
+    .objects.githubusercontent.com \
+    .gcr.io \
+    .public.ecr.aws \
+    .docker.io \
+    .browser-intake-datadoghq.com \
+    .session-replay.browser-intake-datadoghq.com
+ 
+# Allow localhost for management
+acl localhost src 127.0.0.1/32
+ 
+# Safe ports
+acl Safe_ports port 80      # http
+acl Safe_ports port 443     # https
+acl CONNECT method CONNECT  # https
+ 
+# -----------------------------
+# Access rules
+# -----------------------------
+ 
+# Allow localhost
+http_access allow localhost
+ 
+# Allow allowed clients to access allowed domains
+http_access allow allowed_clients allowed_domains
+ 
+# Deny everything else
+http_access deny all
+ 
+# -----------------------------
+# Logging
+# -----------------------------
+access_log /var/log/squid/access.log squid
+ 
+############################################################
+# End of configuration
+############################################################
+ 
