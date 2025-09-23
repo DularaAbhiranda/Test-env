@@ -1,0 +1,15 @@
+[Unit]
+Description=Squid caching proxy
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/usr/sbin/squid -sYC
+ExecReload=/usr/sbin/squid -k reconfigure
+ExecStop=/usr/sbin/squid -k shutdown
+PIDFile=/var/run/squid.pid
+User=$SQUID_USER
+Group=$SQUID_GROUP
+
+[Install]
+WantedBy=multi-user.target
